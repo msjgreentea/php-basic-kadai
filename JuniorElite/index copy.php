@@ -1,0 +1,456 @@
+<?php
+session_start();
+$error = [];
+$post = isset($_SESSION['form']) ? $_SESSION['form'] : [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    // フォームの送信時にエラーをチェックする
+    if (empty($post['name'])) {
+        $error['name'] = 'blank';
+    }
+    if (empty($post['email'])) {
+        $error['email'] = 'blank';
+    } elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+        $error['email'] = 'email';
+    }
+    if (empty($post['contact'])) {
+        $error['contact'] = 'blank';
+    }
+
+    if (count($error) === 0) {
+        // エラーがないので確認画面に移動
+        $_SESSION['form'] = $post;
+        header('Location: confirm.php');
+        exit();
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>ジュニアエリート教室</title>
+    <meta name="description" content="LP-site_JuniorElite">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz@6..96&family=Josefin+Sans&family=Kaisei+Opti&family=Lobster&family=Noto+Sans+JP&family=Sen&display=swap" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <main>
+      <section id="hero">
+        <div class="logoAndBtn">
+          <h1 class="header-logo">
+            <img src="img/3.14_logo_pc.svg" alt="練成会グループ個別指導3.14">
+          </h1>
+          <a class="contactBtn" href="#contact">&nbsp;&nbsp;お申込み・お問合せ</a>
+          <a class="sp-contactBtn" href="#contact"><img src="img/envelope-regular.svg"></a>
+        </div>
+        <div class="hero-container">
+          <div class="hero-text">
+            <h1 class=site-title><img src="img/mv_tit1.svg"></h1>
+            <div class="circle-text">
+              <img src="img/circle1@2x.png" alt="夢中が伸ばす無限の可能性">
+              <img src="img/circle2@2x.png" alt="Elite Junior">
+              <img src="img/circle3@2x.png" alt="三角">
+            </div>
+          </div>
+          <div class="slider-container">
+            <div class="slider">
+              <img src="img/pc_hero.jpg" alt="教室で学ぶ子供達"></li>
+              <img src="img/pc_hero.jpg" alt="教室で学ぶ子供達"></li>
+            </div>>
+            <div class="sp-slider">
+              <img src="img/sp_hero.jpg" alt="教室で学ぶ子供達"></li>
+            </div>>
+          </div>
+        </div>
+      </section>
+      <section id="cta">
+        <div class="cta-wrapper">
+          <div class="cta_illust1">
+            <img src="img/cta_illust1@2x.png" alt="イラスト">
+          </div>
+          <div class="cta-text">
+            <h3>ジュニアエリートで<br>楽しみながら能力を伸ばそう!</h3>
+            <div class="ctaBtn">
+              <p>\ 最短３分で入力完了! /</p>
+              <a class="cta-contactBtn" href="#contact">&nbsp;&nbsp;お申込み・お問合せ</a>
+            </div>
+          </div>
+          <div class="cta_illust2">
+            <img src="img/cta_illust2@2x.png" alt="イラスト">
+          </div>
+        </div>
+      </section>
+        
+        <section id="lead">
+        <div class="concerns-wrapper">
+          <h2><img src="img/worries_h2.svg" alt="こんなお悩みありませんか？"></h2>
+          <div class="concerns">
+            <div class="example">
+              <p class="o"><font color="#e35228">O</font></p>
+              <p class="o"><font color="#e35228">o</font></p>              
+              <div class="imgAndText">
+                <p><img src='img/worries_icon1@2x.jpg'></p>
+                <p>「聞く•話す•読む•書く」の<br>バランスが悪い気がする...</p>
+              </div>
+            </div>
+            <div class="example">
+              <p class="o"><font color="#e35228">O</font></p>
+              <p class="o"><font color="#e35228">o</font></p>              
+              <div class="imgAndText">
+                <p><img src='img/worries_icon2@2x.jpg'></p>
+                <p>算数や数学が好きになる<br>方法はないかなあ...</p>
+              </div>
+            </div>
+            <div class="example">
+              <p class="o"><font color="#e35228">O</font></p>
+              <p class="o"><font color="#e35228">o</font></p>              
+              <div class="imgAndText">
+                <p><img src='img/worries_icon3@2x.jpg'></p>
+                <p>理数系やプログラミングの<br>勉強は何がいいのかなあ...</p>
+              </div>
+            </div>
+          </div>
+          <div class="pinkBelt">
+            <div class="pinkBelt-upper"></div>
+            <div class="pinkTriangle"></div>
+          </div>  
+        </div>
+        <div class="whyChooseUs-wrapper">
+          <h2><img src="img/worries_h3.svg" alt="子供たち自身が夢中になって学べる環境が重要！"></h2>
+          <div class="whyChooseUs">
+            <div class="title">
+              <h3>3.14の学習プログラムはここが凄い！</h3>
+            </div>
+            <div class="facts-container">
+              <div class="fact">
+                <p>個別指導で英語４技能を楽し<br>みながら身につけられます！</p>
+              </div>
+              <div class="fact">
+                <p>パズルを楽しみながら自然に<br>数や図形に強くなれます！</p>
+              </div>
+              <div class="fact">
+                <p>楽しいロボットづくりで高度<br>な知識を身につけられます！</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id ="programs">
+        <div class="program-wrapper">
+          <div class="program-header">
+            <h2><img class="program-header-pc" src="img/feature_h2.svg"></h2>
+            <h2><img class="program-header-sp" src="img/feature_h2_sp.svg"></h2>
+          </div>
+          <div class="classes">
+            <a class="class" href="#">
+              <p>英語教室</p>
+              <img src="img/tab1_icon@2x.png">
+            </a>
+            <a class="class" href="#">
+              <p>算数教室</p>
+              <img src="img/tab2_icon@2x.png">
+            </a>
+            <a class="class" href="#">
+              <p>科学教室</p>
+              <img src="img/tab3_icon@2x.png">
+            </a>
+          </div>
+          <div class="feature">
+            <div class="feature-container">
+              <div class="feature-tab">
+                <span>FEATURES 01</span>
+              </div>
+              <div class="feature-box">
+                <div class="student-img">
+                  <img src="img/english_image1@2x.jpg" alt="英語教室の生徒の学習風景">
+                </div>
+                <div class="feature-text">
+                  <div class="subtitle">
+                    <h2>01</h2>
+                    <h3><font color="#e35228">個別指導型の授業だから、</font><br>どのレベルからでも始められます！</h3>
+                  </div>
+                  <p>一人ひとりの力に大きな個人差があるこどもの英語学習では、
+                    集団指導よりも個別指導の方が効果的です。専門教育を受けた
+                    チューターによる個別指導で、 英語の4技能をバランスよく引き
+                    上げます！
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="feature-container2">
+              <div class="feature-tab2">
+                <span>FEATURES 02</span>
+              </div>
+              <div class="feature-box2">
+                <div class="student-img2">
+                  <img src="img/english_image2@2x.jpg" alt="英語教室の生徒の学習風景">
+                </div>
+                <div class="feature-text">
+                  <div class="subtitle">
+                    <h2>02</h2>
+                    <h3>楽しく通い続けられる、<br><font color="#e35228">無理のないカリキュラム設計</font>です！</h3>
+                  </div>
+                  <p>通いたい曜日や時間・授業回数を選ぶことができるので、とても
+                    通いやすいシステムになっています。他の習い事とも両立しなが
+                    ら、無理なく通い続けられるカリキュラム設計になっています！
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-container">
+              <div class="feature-tab">
+                <span>FEATURES 03</span>
+              </div>
+              <div class="feature-box">
+                <div class="student-img">
+                  <img src="img/english_image3@2x.jpg" alt="英語教室の生徒の学習風景">
+                </div>
+                <div class="feature-text">
+                  <div class="subtitle">
+                    <h2>03</h2>
+                    <h3>成果を確認しながら、<font color="#e35228">確実に英語力を<br>伸ばす</font>ことができます！</h3>
+                  </div>
+                  <p>コミュニケーション英語能力テスト「JET」を採用しているの
+                    で、成果を確認しながら学習できます。
+                    また定期的なネイティブ講師とのコミュニケーションで、
+                    「使える英語」を身につけられます！
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="cta">
+        <div class="cta-wrapper">
+          <div class="cta_illust1">
+            <img src="img/cta_illust1@2x.png" alt="イラスト">
+          </div>
+          <div class="cta-text">
+            <h3>ジュニアエリートで<br>楽しみながら能力を伸ばそう!</h3>
+            <div class="ctaBtn">
+              <p>\ 最短３分で入力完了! /</p>
+              <a class="cta-contactBtn" href="#contact">&nbsp;&nbsp;お申込み・お問合せ</a>
+            </div>
+          </div>
+          <div class="cta_illust2">
+            <img src="img/cta_illust2@2x.png" alt="イラスト">
+          </div>
+        </div>
+      </section>
+
+      <section id="testimonials">
+        <div class="testimonials-wrapper">
+          <h2><img src="img/voice.svg"></h2>
+          <div class="testimonials-upper">
+            <div class="testimonial-container">
+              <div class="testimonial-img">
+                <img src="img/voice1@2x.jpg">
+                <span>Rさん お父さま</span>
+              </div>
+              <div class="testimonial-text">
+                <h3>英語の勉強に積極性がでてきたのでとても嬉しいです！</h3>
+                <p>レプトンの授業は個別のカリキュラムなので、
+                  授業に乗り遅れるようなこともなく満足感も高いようです。
+                  積極的に取り組むようになったことが何より嬉しいです！</p>
+              </div>
+            </div>
+            <div class="testimonial-container">
+              <div class="testimonial-img">
+                <img src="img/voice2@2x.jpg">
+                <span>Yくん お母さま</span>
+              </div>
+              <div class="testimonial-text">
+                <h3>英語をしっかり「書ける」ようになったので安心しました！</h3>
+                <p>以前から英会話に通っていましたが、「書く力」が弱いことがとても心配でした。
+                  レプトンは「読む」「書く」こともバランスよくしっかり身につくので助かりました！</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonials-bottom">
+            <div class="testimonial-container">
+              <div class="testimonial-img">
+                <img src="img/voice3@2x.jpg">
+                <span>Oさん お母さま</span>
+              </div>
+              <div class="testimonial-text">
+                <h3>算数の力だけでなく粘り強く考える力がついて驚きました！</h3>
+                <p>パズル道場DXに通ってから、できない問題や難しい問題も投げ出さずに粘り強く
+                  取り組むようになりました。
+                  算数の力だけでなく、様々な力が身についてきました！</p>
+              </div>
+            </div>
+            <div class="testimonial-container">
+              <div class="testimonial-img">
+                <img src="img/voice4@2x.jpg">
+                <span>Kくん お父さま</span>
+              </div>
+              <div class="testimonial-text">
+                <h3>LEGO®を使って理数系の勉強ができるのが嬉しいようです！</h3>
+                <p>小さな頃からLEGO®で遊んでいましたが、
+                  クレファスではLEGO®で本格的なロボットづくりができることや、
+                  プログラミングも勉強できるのが嬉しいようです！</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="qAndA">
+        <div class="qAndA-wrapper">
+          <h2><img src="img/qanda_h.svg"></h2>
+          <div class="accordion">
+            <input id="block-01" type="checkbox" class="toggle">
+            <label class="question" for="block-01">
+              <div class="q-icon"><p>Q</p></div>
+              <div class="q-text"><p>2週間必ず続けなければいけませんか？</p></div>
+            </label>
+            <div class="answer">
+              <div class="a-icon"><p>A</p></div> 
+              <div class="a-text">
+                <p>お子さんに合っているかをじっくり検討していただくための無料体験ですから、
+                  もし合わないと感じたら途中でやめることも可能なので担当者までご相談ください。
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="accordion">
+            <input id="block-02" type="checkbox" class="toggle">
+            <label class="question" for="block-02">
+              <div class="q-icon"><p>Q</p></div>
+              <div class="q-text"><p>2週間必ず続けなければいけませんか？</p></div>
+            </label>
+            <div class="answer">
+              <div class="a-icon"><p>A</p></div> 
+              <div class="a-text">
+                <p>お子さんに合っているかをじっくり検討していただくための無料体験ですから、
+                  もし合わないと感じたら途中でやめることも可能なので担当者までご相談ください。
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="accordion">
+            <input id="block-03" type="checkbox" class="toggle">
+            <label class="question" for="block-03">
+              <div class="q-icon"><p>Q</p></div>
+              <div class="q-text"><p>2週間必ず続けなければいけませんか？</p></div>
+            </label>
+            <div class="answer">
+              <div class="a-icon"><p>A</p></div> 
+              <div class="a-text">
+                <p>お子さんに合っているかをじっくり検討していただくための無料体験ですから、
+                  もし合わないと感じたら途中でやめることも可能なので担当者までご相談ください。
+                </p>
+              </div>
+            </div>
+          </div>                 
+        </div>
+      </section>
+  
+      <section id="contact">
+        <div class="contact-wrapper">
+          <h2><img src="img/contact_h.svg"></h2>
+          <div class="orange-container">
+            <div class="form-header">
+              <p>お電話からでもお申込みいただけます。</p>
+              <div class="phoneAndHours">
+                <a class="phoneNumber" href="0120-876-314">0120-876-314</a>
+                <span>受付時間：月～土<br>10:00～19:00</span>
+              </div>
+              <span>営業時間外でのお申込みは、受付までお時間がかかる場合がございます。</span>
+            </div>
+            <div class="container">
+              <form action="" method="POST" novalidate>
+                <p>お問い合わせ</p>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-2">
+                      <label for="inputName">生徒さん氏名</label>
+                    </div>
+                    <div class="col-2">
+                      <p class="require_item">必須</p>
+                    </div>
+                    <div class="col-md-8">
+                    <input type="text" name="name" id="inputName" class="form-control" value="<?php echo isset($post['name']) ? htmlspecialchars($post['name']) : ''; ?>" required autofocus>
+                      <?php if ($error['name'] === 'blank'): ?>
+                        <p class="error_msg">※お名前をご記入下さい</p>
+                      <?php endif; ?>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-2">
+                      <label for="inputEmail">メールアドレス</label>
+                    </div>
+                    <div class="col-2">
+                      <p class="require_item">必須</p>
+                    </div>
+                    <div class="col-8">
+                      <input type="email" name="email" id="inputEmail" class="form-control" value="<?php echo isset($post['email']) ? htmlspecialchars($post['email']) : ''; ?>" required>
+                      <?php if ($error['email'] === 'blank'): ?>
+                        <p class="error_msg">※メールアドレスをご記入ください</p>
+                      <?php endif; ?>
+                      <?php if ($error['email'] === 'email'): ?>
+                        <p class="error_msg">※メールアドレスを正しくご記入ください</p>
+                      <?php endif; ?>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-2">
+                      <label for="inputContent">お問い合わせ内容</label>
+                    </div>
+                    <div class="col-2">
+                      <p class="require_item">必須</p>
+                    </div>
+                    <div class="col-8">
+                    <textarea name="contact" id="inputContent" rows="10" class="form-control" required><?php echo isset($post['contact']) ? htmlspecialchars($post['contact']) : ''; ?></textarea>
+                      <?php if ($error['contact'] === 'blank'): ?>
+                        <p class="error_msg">※お問い合わせ内容をご記入下さい</p>
+                      <?php endif; ?>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                <div class="col-8 offset-4">
+                  <button type="submit">確認画面へ</button>
+                </div>
+               <div> 
+              </form>
+            </div><!--end of container--> 
+          </div><!--end of orange container-->
+        </div> <!--end of wrapper--> 
+      </section>
+    </main>
+
+    <footer id="footer">
+        <div class="footer-wrapper">
+          <div class="logoAndLink">
+            <img class="footer-logo" src="img/f_logo.svg" alt="練成会グループ個別指導3.14">
+            <a class="linkButton" href="https://314je.com/">公式サイトはこちら</a>
+          </div>
+          <p class="copyright">
+            &copy; 3.14 Junior Elite.
+          </p>
+      </div>
+    </footer>
+  </body>
+</html>
